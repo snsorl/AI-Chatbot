@@ -1,9 +1,10 @@
+```json
 {
  "cells": [
   {
    "cell_type": "code",
    "execution_count": null,
-   "id": "b1a2c3d4-e5f6-47a8-b9c0-1d2e3f4a5b6c",
+   "id": "09cc2352-d520-495f-af53-2f8c3d65e68d",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -12,8 +13,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 1,
-   "id": "c2d3e4f5-a6b7-48c9-d0e1-f2a3b4c5d6e7",
+   "execution_count": 3,
+   "id": "79f393b6-6924-4346-ba22-a1b7abc6a55d",
    "metadata": {},
    "outputs": [
     {
@@ -50,8 +51,8 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 2,
-   "id": "d3e4f5a6-b7c8-49d0-e1f2-a3b4c5d6e7f8",
+   "execution_count": 5,
+   "id": "4e041a28-3a11-4834-b643-75c78a10399c",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -88,56 +89,17 @@
     "            temperature=0.7,\n",
     "            top_p=0.9,\n",
     "            pad_token_id=tokenizer.eos_token_id,\n",
-    "        )\n",
+    "        );\n",
     "    new_tokens = output_ids[0][inputs[\"input_ids\"].shape[1]:]\n",
     "    reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()\n",
     "    history.append({\"role\": \"assistant\", \"content\": reply})\n",
-    "    return reply\n",
-    "\n",
-    "def main():\n",
-    "    persona = \"casual\"\n",
-    "    history = new_conversation(persona)\n",
-    "\n",
-    "    print(\"\\nChatbot ready! Commands:\")\n",
-    "    print(\"  /persona <name>  -> switch personality:\", \", \".join(PERSONAS))\n",
-    "    print(\"  /reset           -> forget the conversation\")\n",
-    "    print(\"  /exit            -> quit\\n\")\n",
-    "\n",
-    "    while True:\n",
-    "        user_input = input(\"You: \").strip()\n",
-    "\n",
-    "        if not user_input:\n",
-    "            continue\n",
-    "\n",
-    "        if user_input.lower() in (\"/exit\", \"exit\", \"quit\"):\n",
-    "            print(\"Chatbot: Catch you later!\")\n",
-    "            break\n",
-    "\n",
-    "        if user_input.lower() == \"/reset\":\n",
-    "            history = new_conversation(persona)\n",
-    "            print(\"Chatbot: Memory cleared.\\n\")\n",
-    "            continue\n",
-    "\n",
-    "        if user_input.lower().startswith(\"/persona\"):\n",
-    "            parts = user_input.split()\n",
-    "            if len(parts) == 2 and parts[1] in PERSONAS:\n",
-    "                persona = parts[1]\n",
-    "                history = new_conversation(persona)\n",
-    "                print(f\"Chatbot: Switched to '{persona}' mode.\\n\")\n",
-    "            else:\n",
-    "                print(\"Chatbot: Pick one of:\", \", \".join(PERSONAS), \"\\n\")\n",
-    "            continue\n",
-    "\n",
-    "        try:\n",
-    "            print(f\"Chatbot: {chat(history, user_input)}\\n\")\n",
-    "        except Exception as error:\n",
-    "            print(f\"Chatbot: Something went wrong -> {error}\\n\")"
+    "    return reply"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 3,
-   "id": "e4f5a6b7-c8d9-40e1-f2a3-b4c5d6e7f8a9",
+   "execution_count": 15,
+   "id": "25b59199-0696-42c2-b4a1-f4c1722c1b87",
    "metadata": {},
    "outputs": [
     {
@@ -155,7 +117,7 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  Teach me python what is [::-2]\n"
+      "You: Teach me python what is [::-2]\n"
      ]
     },
     {
@@ -170,7 +132,7 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  Does [:] when assigned to a new variable make a copy of the list?\n"
+      "You: Does [:] when assigned to a new variable make a copy of the list?\n"
      ]
     },
     {
@@ -185,7 +147,7 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  What does %d mean in regex in python. Can you list all regex common syntax?\n"
+      "You: What does %d mean in regex in python. Can you list all regex common syntax?\n"
      ]
     },
     {
@@ -227,7 +189,7 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  Thank you, if I have any other Python questions I will ask you later. Can you update me on current events?\n"
+      "You: Thank you, if I have any other Python questions I will ask you later. Can you update me on current events?\n"
      ]
     },
     {
@@ -242,7 +204,7 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  What all stuff are you able to answer?\n"
+      "You: What all stuff are you able to answer?\n"
      ]
     },
     {
@@ -257,14 +219,16 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  Explain why waterfalls flow endlessly.\n"
+      "You: Explain why waterfalls flow endlessly.\n"
      ]
     },
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Chatbot: Waterfall flows endlessly because the force of gravity pulls the water downwards, even though it may not reach the bottom due to its height. As the water falls, it slows down, creating resistance against the downward pull of gravity. Over time, this slow movement causes the water to accumulate and eventually stop flowing completely.\n\nThe concept of a waterfall ending in nothingness is often used metaphorically to describe the ultimate state of things, where something continues indefinitely without diminishing or ceasing.\n",
+      "Chatbot: Waterfall flows endlessly because the force of gravity pulls the water downwards, even though it may not reach the bottom due to its height. As the water falls, it slows down, creating resistance against the downward pull of gravity. Over time, this slow movement causes the water to accumulate and eventually stop flowing completely.\n",
+      "\n",
+      "The concept of a waterfall ending in nothingness is often used metaphorically to describe the ultimate state of things, where something continues indefinitely without diminishing or ceasing.\n",
       "\n"
      ]
     },
@@ -272,7 +236,7 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  Goodbye\n"
+      "You: Goodbye\n"
      ]
     },
     {
@@ -287,7 +251,7 @@
      "name": "stdin",
      "output_type": "stream",
      "text": [
-      "You:  Nope\n"
+      "You: Nope\n"
      ]
     },
     {
@@ -300,7 +264,43 @@
     }
    ],
    "source": [
-    "main()"
+    "persona = \"casual\"\n",
+    "history = new_conversation(persona)\n",
+    "\n",
+    "print(\"\\nChatbot ready! Commands:\")\n",
+    "print(\"  /persona <name>  -> switch personality:\", \", \".join(PERSONAS))\n",
+    "print(\"  /reset           -> forget the conversation\")\n",
+    "print(\"  /exit            -> quit\\n\")\n",
+    "\n",
+    "while True:\n",
+    "    user_input = input(\"You: \").strip()\n",
+    "\n",
+    "    if not user_input:\n",
+    "        continue\n",
+    "\n",
+    "    if user_input.lower() in (\"/exit\", \"exit\", \"quit\"):\n",
+    "        print(\"Chatbot: Catch you later!\")\n",
+    "        break\n",
+    "\n",
+    "    if user_input.lower() == \"/reset\":\n",
+    "        history = new_conversation(persona)\n",
+    "        print(\"Chatbot: Memory cleared.\\n\")\n",
+    "        continue\n",
+    "\n",
+    "    if user_input.lower().startswith(\"/persona\"):\n",
+    "        parts = user_input.split()\n",
+    "        if len(parts) == 2 and parts[1] in PERSONAS:\n",
+    "            persona = parts[1]\n",
+    "            history = new_conversation(persona)\n",
+    "            print(f\"Chatbot: Switched to '{persona}' mode.\\n\")\n",
+    "        else:\n",
+    "            print(\"Chatbot: Pick one of:\", \", \".join(PERSONAS), \"\\n\")\n",
+    "        continue\n",
+    "\n",
+    "    try:\n",
+    "        print(f\"Chatbot: {chat(history, user_input)}\\n\")\n",
+    "    except Exception as error:\n",
+    "        print(f\"Chatbot: Something went wrong -> {error}\\n\")"
    ]
   }
  ],
@@ -326,3 +326,5 @@
  "nbformat": 4,
  "nbformat_minor": 5
 }
+
+```
